@@ -1,5 +1,5 @@
-#include <Pinger.h>
-#include <PingerResponse.h>
+#include <ESP8266Ping.h>
+ 
 
 #include <BearSSLHelpers.h>
 #include <CertStoreBearSSL.h>
@@ -25,7 +25,7 @@
 
 const char* ssid = "Fam Lopez";
 bool pingtest = false;
-const char* password = "";
+const char* password = "testtest";
 
 WiFiServer server(80);
 String header;
@@ -121,7 +121,8 @@ void loop() {
 
 
 
-
+WiFiClient client = server.available();
+ 
 
 
                             // If a new client connects,
