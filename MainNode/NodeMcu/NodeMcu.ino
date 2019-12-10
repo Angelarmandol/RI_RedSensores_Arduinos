@@ -21,10 +21,10 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 #include <SD.h>
-
+#include <ESP8266WiFi.h>
 #define CS_PIN  D8 
 const char* ssid = "Fam Lopez";
-const char* password = "";
+const char* password = "testtest";
 String page = "";
 String header;
 
@@ -50,9 +50,7 @@ IPAddress subnet(255,255,255,0);
 // Access point Ip Address……
 
 IPAddress local_IP(192,168,4,35);
-
 IPAddress gateway2(192,168,4,9);
-
 IPAddress subnet2(255,255,255,0);
 
 void setup(void)
@@ -64,11 +62,8 @@ void setup(void)
    pinMode(LEDPin3, OUTPUT);
    pinMode(LEDPin4, OUTPUT);
    
-   digitalWrite(LEDPin1, LOW);
-   digitalWrite(LEDPin2, LOW);
-   digitalWrite(LEDPin3, LOW);
-   digitalWrite(LEDPin4, LOW);
-
+ 
+  
    
   if (!SD.begin(CS_PIN)) {
     Serial.println("Falla SD.");
@@ -162,5 +157,29 @@ void setup(void)
         
 }// end of setup
 void loop() {
+   
+   digitalWrite(LEDPin1, LOW);
+   digitalWrite(LEDPin2, LOW);
+   digitalWrite(LEDPin3, LOW);
+   digitalWrite(LEDPin4, LOW);
+
+
+
+
+   
     server.handleClient();
+
+/*
+
+WiFiClient client = server.available();
+  if (!client) {return;}
+
+  String request = client.readStringUntil('\r');
+  Serial.println("********************************");
+  Serial.println("From the station: " + request);
+  client.flush();
+  Serial.print("Byte sent to the station: ");
+  Serial.println(client.println(request + "ca" + "\r"));
+*/
+    
     }
