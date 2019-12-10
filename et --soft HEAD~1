@@ -1,0 +1,99 @@
+[33mcommit af08ffb19335a04d4f8a69c3b14bff617b0316cd[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Mon Dec 9 16:09:44 2019 -0800
+
+    Revert "Revert "add simple webserver for read/writte on SD""
+    
+    This reverts commit 167793465c2fcd88c3dd8589551ec835b1de132b.
+
+[33mcommit 167793465c2fcd88c3dd8589551ec835b1de132b[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Mon Dec 9 16:09:41 2019 -0800
+
+    Revert "add simple webserver for read/writte on SD"
+    
+    This reverts commit 8a5cc99fd42e038a6734cbdf77df55c928bfaca8.
+
+[33mcommit 8a5cc99fd42e038a6734cbdf77df55c928bfaca8[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Mon Dec 9 16:05:39 2019 -0800
+
+    add simple webserver for read/writte on SD
+
+[33mcommit 856d9cd70d2b10e8e35864b0a32ed331d617a8c5[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Thu Dec 5 01:51:11 2019 -0800
+
+    add webserver
+
+[33mcommit 520b8729046289e04e620fecfdfbaa7e9d62dc00[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:46:08 2019 -0800
+
+    update readme www
+
+[33mcommit 0ad5eb5048d1dce8a3fa7afb2da4daa3ecc4013f[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:41:30 2019 -0800
+
+    add web files
+
+[33mcommit 024e448163da5457dfbbcb2be34d7747a538814a[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:35:34 2019 -0800
+
+    undo label
+
+[33mcommit 78dddaa498b79809a563e3dd1e61f3480214f0f6[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:33:48 2019 -0800
+
+    add libraries folder
+    
+    initial commit
+
+[33mcommit 91cd23a28cc5bbbb12cac88fd1a90ba381a382bb[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:33:09 2019 -0800
+
+    add language label
+    
+    labeling
+
+[33mcommit f214899055d148a5023ac7cd6abb7e158d433440[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:32:03 2019 -0800
+
+    add libraries
+    
+    initial commit
+
+[33mcommit 7ac718c0c45d1733888df1f3d8951eec6ac6085a[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:28:50 2019 -0800
+
+    add folders
+    
+    inital commit
+
+[33mcommit 55ea3960ba53d1c4bd49cd787d6ff02b649764d8[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:27:39 2019 -0800
+
+    add arduino code
+    
+    initial commit
+
+[33mcommit 5a3a2ba317086b4effd50b79388b20737685e633[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:21:52 2019 -0800
+
+    update readme
+    
+    initial comit
+
+[33mcommit 2d0f04077d0145b9bb52371a203cf9624d808eaf[m
+Author: Angel Lopez <angelarmandol@hotmail.com>
+Date:   Wed Dec 4 23:16:52 2019 -0800
+
+    Initial commit
