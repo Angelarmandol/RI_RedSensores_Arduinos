@@ -19,16 +19,14 @@
 #include <WiFiServerSecureAxTLS.h>
 #include <WiFiServerSecureBearSSL.h>
 #include <WiFiUdp.h>
- 
-#include <ESP8266WiFi.h>
 #include <ESP8266Ping.h>
-#include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
-#include <ESP8266WiFi.h>
+#include <SD.h>
+
+#define CS_PIN  D8 
 const char* ssid = "Fam Lopez";
-bool pingtest = false;
 const char* password = "";
 String page = "";
 int LEDPin = 0;
@@ -39,8 +37,6 @@ int LEDPin4 = 4;
  
 
 ESP8266WebServer server(80); 
-
- 
 String header;
 // Current time
 unsigned long currentTime = millis();
@@ -70,10 +66,24 @@ void setup(void)
 
 {
 
-  digitalWrite(LEDPin1, LOW);
+   digitalWrite(LEDPin1, LOW);
    digitalWrite(LEDPin2, LOW);
    digitalWrite(LEDPin3, LOW);
    digitalWrite(LEDPin4, LOW);
+
+  if (!SD.begin(CS_PIN)) {
+    Serial.println("Falla SD.");
+    //programa encerrrado
+    return;
+  }
+   
+  //se chegou aqui é porque o cartão foi inicializado corretamente  
+  Serial.println("SD OK.");
+ 
+ 
+
+ 
+
    
   //the HTML of the web page
   page = "<h1>Simple NodeMCU Web Server</h1><p><a href=\"LEDOn\"><button>ON</button></a>&nbsp;<a href=\"LEDOff\"><button>OFF</button></a></p><a href=\"Send\"><button>Send</button></a>";
@@ -114,6 +124,18 @@ void setup(void)
    server.on("/Send", [](){
     server.send(200, "text/html", page);
     Serial.println("Guardar y enviar");
+    File dataFile = SD.open("LOG.txt", FILE_WRITE);
+      if (dataFile) {
+    Serial.println("SD OPEN OK.");
+      dataFile.print(currentTime);
+      dataFile.println(" * ");
+      dataFile.close();
+  }
+  
+  else {
+    Serial.println("No se encuentra LOG.txt");
+  }
+ 
     delay(1000); 
   });
   server.begin();
