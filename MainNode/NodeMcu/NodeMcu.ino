@@ -30,7 +30,7 @@ const char* ssid = "Fam Lopez";
 const char* password = "testtest";
 String page = "";
 String header;
-
+int a = 1;
 
 int LEDPin = 0;
 int LEDPin1 = 1;
@@ -76,6 +76,14 @@ void setup(void)
   Serial.println("SD OK.");
  
 */
+ 
+
+
+///////////////////////////////////////////////////////////
+              /////Soft AP
+
+              //////////////////////////////////////////////////////////
+
         delay(1000);
         Serial.begin(115200);
         WiFi.begin(ssid, password); //begin WiFi connection
@@ -91,29 +99,6 @@ void setup(void)
         Serial.println(ssid);
         Serial.print("IP address: ");
         Serial.println(WiFi.localIP());
-
-/*
-              /////Soft AP
-              Serial.printf("Connecting to %s\n", ssid);      
-              WiFi.begin(ssid, password);
-              WiFi.config(staticIP, gateway, subnet);
-              
-              while (WiFi.status() != WL_CONNECTED){
-              delay(500);
-              Serial.print(".");
-              }
-              
-              Serial.println();
-              Serial.print("Connected, IP address — Client Ip: ");
-              Serial.println(WiFi.localIP());
-              Serial.println();
-              Serial.print("Setting soft-AP configuration … ");
-              Serial.println(WiFi.softAPConfig(local_IP, gateway2, subnet2) ? "Ready" : "Failed!");
-              Serial.print("Setting soft-AP … ");
-              Serial.println(WiFi.softAP("Principal") ? "Ready" : "Failed!");
-              Serial.print("Soft-AP IP address = ");
-              Serial.println(WiFi.softAPIP());
-          */
 
 
         
@@ -138,7 +123,9 @@ void setup(void)
   
    server.on("/Send", [](){
     server.send(200, "text/html", page);
-    Serial.println("Guardar y enviar");
+    Serial.println("Se apaga softap, listo para enviar");
+    a=0;
+    softap(a);
     File dataFile = SD.open("LOG.txt", FILE_WRITE);
       if (dataFile) {
     Serial.println("SD OPEN OK.");
@@ -161,12 +148,12 @@ void setup(void)
 }// end of setup
 void loop() {
 
-String url = "http://reddesensores2019.000webhostapp.com/postdemo.php?station=8888&status=9999";
+String url = "http://reddesensores2019.000webhostapp.com/postdemo.php?station=";
 
 HTTPClient http2;
    WiFiClient client;
  
-   if (http2.begin(client, url)) //Iniciar conexión
+   if (http2.begin(client, url+random(20)+"000&status="+random(20))) //Iniciar conexión
    {
       Serial.print("[HTTP] GET...\n");
       int httpCode = http2.GET();  // Realizar petición
@@ -177,6 +164,9 @@ HTTPClient http2;
          if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
             String payload = http2.getString();   // Obtener respuesta
             Serial.println(payload);   // Mostrar respuesta por serial
+            Serial.println("se enciende ap");
+            a=1;
+            softap(a);
          }
       }
       else {
@@ -207,22 +197,8 @@ delay(30000);    //Send a request every 30 seconds
 
    
     server.handleClient();
-
-/*
-
-WiFiClient client = server.available();
-  if (!client) {return;}
-
-  String request = client.readStringUntil('\r');
-  Serial.println("********************************");
-  Serial.println("From the station: " + request);
-  client.flush();
-  Serial.print("Byte sent to the station: ");
-  Serial.println(client.println(request + "ca" + "\r"));
-*/
-
  
-
+    /*
  HTTPClient http;   
  Serial.println("inicio 1"); 
   String ADCData, station, postData;
@@ -234,7 +210,7 @@ WiFiClient client = server.available();
   postData = "status=" + ADCData + "&station=" + station ;
  
     
-    /*
+
      * http.begin("http://reddesensores2019.000webhostapp.com/postdemo.php"); //local
     http.POST("Content-Type: application/x-www-form-urlencoded");
     http.POST("POST /postdemo.php HTTP/1.1");
@@ -250,17 +226,42 @@ WiFiClient client = server.available();
   Serial.println(httpCode);   //Print HTTP return code
     http.end();
    Serial.println("inicio 7"); 
-  delay(5000);   
+   
 */
 
+  delay(5000);
+    }
 
 
+    void softap(int a){
 
-
-
-
-
-
+               
+              Serial.printf("Connecting to %s\n", ssid);      
+              WiFi.begin(ssid, password);
+              WiFi.config(staticIP, gateway, subnet);
+              
+              while (WiFi.status() != WL_CONNECTED){
+              delay(500);
+              Serial.print(".");
+              }
+              
+              Serial.println();
+              Serial.print("Connected, IP address — Client Ip: ");
+              Serial.println(WiFi.localIP());
+              Serial.println();
+              Serial.print("Setting soft-AP configuration … ");
+              Serial.println(WiFi.softAPConfig(local_IP, gateway2, subnet2) ? "Ready" : "Failed!");
+              Serial.print("Setting soft-AP … ");
+              Serial.println(WiFi.softAP("Principal") ? "Ready" : "Failed!");
+              Serial.print("Soft-AP IP address = ");
+              Serial.println(WiFi.softAPIP());
+              
+              if(a==0){
+             WiFi.forceSleepBegin();      
+                }
+              
+          
+    }
 
     
-    }
+    
