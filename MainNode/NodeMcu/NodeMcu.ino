@@ -16,13 +16,16 @@
 #include <WiFiServerSecureAxTLS.h>
 #include <WiFiServerSecureBearSSL.h>
 #include <WiFiUdp.h>
-#include <ESP8266Ping.h>
+ 
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 #include <SD.h>
 #include <ESP8266WiFi.h>
-#define CS_PIN  D8 
+#include <HttpClient.h>
+
+
+//#define CS_PIN  D8 
 const char* ssid = "Fam Lopez";
 const char* password = "testtest";
 String page = "";
@@ -63,7 +66,7 @@ void setup(void)
    pinMode(LEDPin4, OUTPUT);
    
  
-  
+  /*
    
   if (!SD.begin(CS_PIN)) {
     Serial.println("Falla SD.");
@@ -72,7 +75,7 @@ void setup(void)
    
   Serial.println("SD OK.");
  
-
+*/
         delay(1000);
         Serial.begin(115200);
         WiFi.begin(ssid, password); //begin WiFi connection
@@ -89,7 +92,7 @@ void setup(void)
         Serial.print("IP address: ");
         Serial.println(WiFi.localIP());
 
-
+/*
               /////Soft AP
               Serial.printf("Connecting to %s\n", ssid);      
               WiFi.begin(ssid, password);
@@ -110,7 +113,7 @@ void setup(void)
               Serial.println(WiFi.softAP("Principal") ? "Ready" : "Failed!");
               Serial.print("Soft-AP IP address = ");
               Serial.println(WiFi.softAPIP());
-      
+          */
 
 
         
@@ -157,7 +160,43 @@ void setup(void)
         
 }// end of setup
 void loop() {
-   
+
+String url = "http://reddesensores2019.000webhostapp.com/postdemo.php?station=8888&status=9999";
+
+HTTPClient http2;
+   WiFiClient client;
+ 
+   if (http2.begin(client, url)) //Iniciar conexión
+   {
+      Serial.print("[HTTP] GET...\n");
+      int httpCode = http2.GET();  // Realizar petición
+ 
+      if (httpCode > 0) {
+         Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+ 
+         if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+            String payload = http2.getString();   // Obtener respuesta
+            Serial.println(payload);   // Mostrar respuesta por serial
+         }
+      }
+      else {
+         Serial.printf("[HTTP] GET... failed, error: %s\n", http2.errorToString(httpCode).c_str());
+      }
+ 
+      http2.end();
+   }
+   else {
+      Serial.printf("[HTTP} Unable to connect\n");
+   }
+ 
+
+
+///////////////////////////////////////
+ 
+ 
+delay(30000);    //Send a request every 30 seconds
+ 
+
    digitalWrite(LEDPin1, LOW);
    digitalWrite(LEDPin2, LOW);
    digitalWrite(LEDPin3, LOW);
@@ -181,5 +220,47 @@ WiFiClient client = server.available();
   Serial.print("Byte sent to the station: ");
   Serial.println(client.println(request + "ca" + "\r"));
 */
+
+ 
+
+ HTTPClient http;   
+ Serial.println("inicio 1"); 
+  String ADCData, station, postData;
+  int adcvalue=analogRead(A0);  //Read Analog value of LDR
+  ADCData = String(adcvalue);   //String to interger conversion
+  station = "A";
+  Serial.println("inicio 2"); 
+  //Post Data
+  postData = "status=" + ADCData + "&station=" + station ;
+ 
+    
+    /*
+     * http.begin("http://reddesensores2019.000webhostapp.com/postdemo.php"); //local
+    http.POST("Content-Type: application/x-www-form-urlencoded");
+    http.POST("POST /postdemo.php HTTP/1.1");
+    http.POST("Host: http://reddesensores2019.000webhostapp.com/");
+    http.POST("Content-Length: 7");
+    http.POST("");
+      String payload = http.getString();
+    int httpCode = http.POST(postData);
+      Serial.println("postData: "+postData);
+  Serial.println("payload: "+payload);
+  Serial.println("inicio 5"); 
+  Serial.println("codigo de error");
+  Serial.println(httpCode);   //Print HTTP return code
+    http.end();
+   Serial.println("inicio 7"); 
+  delay(5000);   
+*/
+
+
+
+
+
+
+
+
+
+
     
     }
