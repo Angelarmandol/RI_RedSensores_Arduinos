@@ -78,12 +78,6 @@ void setup(void)
 */
  
 
-
-///////////////////////////////////////////////////////////
-              /////Soft AP
-
-              //////////////////////////////////////////////////////////
-
         delay(1000);
         Serial.begin(115200);
         WiFi.begin(ssid, password); //begin WiFi connection
@@ -180,9 +174,6 @@ HTTPClient http2;
    }
  
 
-
-///////////////////////////////////////
- 
  
 delay(30000);    //Send a request every 30 seconds
  
@@ -198,37 +189,8 @@ delay(30000);    //Send a request every 30 seconds
    
     server.handleClient();
  
-    /*
- HTTPClient http;   
- Serial.println("inicio 1"); 
-  String ADCData, station, postData;
-  int adcvalue=analogRead(A0);  //Read Analog value of LDR
-  ADCData = String(adcvalue);   //String to interger conversion
-  station = "A";
-  Serial.println("inicio 2"); 
-  //Post Data
-  postData = "status=" + ADCData + "&station=" + station ;
- 
-    
-
-     * http.begin("http://reddesensores2019.000webhostapp.com/postdemo.php"); //local
-    http.POST("Content-Type: application/x-www-form-urlencoded");
-    http.POST("POST /postdemo.php HTTP/1.1");
-    http.POST("Host: http://reddesensores2019.000webhostapp.com/");
-    http.POST("Content-Length: 7");
-    http.POST("");
-      String payload = http.getString();
-    int httpCode = http.POST(postData);
-      Serial.println("postData: "+postData);
-  Serial.println("payload: "+payload);
-  Serial.println("inicio 5"); 
-  Serial.println("codigo de error");
-  Serial.println(httpCode);   //Print HTTP return code
-    http.end();
-   Serial.println("inicio 7"); 
    
-*/
-
+  
   delay(5000);
     }
 
