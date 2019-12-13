@@ -68,6 +68,8 @@ void setup(void)
  
   /*
    
+   //comprobacion de targeta SD
+
   if (!SD.begin(CS_PIN)) {
     Serial.println("Falla SD.");
     return;
@@ -97,10 +99,12 @@ void setup(void)
 
         
    
-  //the HTML of the web page
+  //HTML  que se muestra en la pagina web
   page = "<h1>Simple NodeMCU Web Server</h1><p><a href=\"LEDOn\"><button>ON</button></a>&nbsp;<a href=\"LEDOff\"><button>OFF</button></a></p><a href=\"Send\"><button>Send</button></a>";
 
    
+
+   //casos en que abre el servidor web, peticiones
   server.on("/", [](){
     server.send(200, "text/html", page);
   });
@@ -117,6 +121,8 @@ void setup(void)
   
    server.on("/Send", [](){
     server.send(200, "text/html", page);
+
+    //boton de Send, se desactiva el soft AP
     Serial.println("Se apaga softap, listo para enviar");
     a=0;
     softap(a);
@@ -136,15 +142,18 @@ void setup(void)
   });
   server.begin();
   Serial.println("Web server started!");
-
+  //Se inicia el servidor web
   
         
 }// end of setup
-void loop() {
 
+
+void loop() {
+//url de la peticion get
 String url = "http://reddesensores2019.000webhostapp.com/postdemo.php?station=";
 
 HTTPClient http2;
+// inicializacion de la instancia http
    WiFiClient client;
  
    if (http2.begin(client, url+random(20)+"000&status="+random(20))) //Iniciar conexión
@@ -153,6 +162,7 @@ HTTPClient http2;
       int httpCode = http2.GET();  // Realizar petición
  
       if (httpCode > 0) {
+        //se muestra el codigo de respuesta http en caso satifactorio
          Serial.printf("[HTTP] GET... code: %d\n", httpCode);
  
          if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
@@ -165,6 +175,7 @@ HTTPClient http2;
       }
       else {
          Serial.printf("[HTTP] GET... failed, error: %s\n", http2.errorToString(httpCode).c_str());
+         //codigo de error HTML
       }
  
       http2.end();
@@ -177,6 +188,8 @@ HTTPClient http2;
  
 delay(30000);    //Send a request every 30 seconds
  
+
+ //leds para codigo de errores
 
    digitalWrite(LEDPin1, LOW);
    digitalWrite(LEDPin2, LOW);
@@ -194,10 +207,12 @@ delay(30000);    //Send a request every 30 seconds
   delay(5000);
     }
 
-
+//metodo para la configuraciondel soft ap
     void softap(int a){
 
                
+
+              // Se inicializa la conexion de red
               Serial.printf("Connecting to %s\n", ssid);      
               WiFi.begin(ssid, password);
               WiFi.config(staticIP, gateway, subnet);
@@ -206,7 +221,7 @@ delay(30000);    //Send a request every 30 seconds
               delay(500);
               Serial.print(".");
               }
-              
+              // se muestra la configuracion de la red
               Serial.println();
               Serial.print("Connected, IP address — Client Ip: ");
               Serial.println(WiFi.localIP());
@@ -219,6 +234,7 @@ delay(30000);    //Send a request every 30 seconds
               Serial.println(WiFi.softAPIP());
               
               if(a==0){
+                // si se pide dar de baja el ap se forza a apagar el modo
              WiFi.forceSleepBegin();      
                 }
               
